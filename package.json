@@ -12,11 +12,12 @@
   },
   "license": "ISC",
   "author": "pooja lande",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "assignment-01": "node src/assignment-01/index.ts"
   },
   "keywords": [],
   "dependencies": {
