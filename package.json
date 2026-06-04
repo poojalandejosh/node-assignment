@@ -1,0 +1,25 @@
+{
+  "name": "assignment-",
+  "version": "1.0.0",
+  "description": "node learning assignments",
+  "homepage": "https://github.com/poojalandejosh/node-assignment#readme",
+  "bugs": {
+    "url": "https://github.com/poojalandejosh/node-assignment/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poojalandejosh/node-assignment.git"
+  },
+  "license": "ISC",
+  "author": "pooja lande",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
