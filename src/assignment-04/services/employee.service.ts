@@ -1,5 +1,6 @@
 import pool from "../config/db.ts";
 import type { ResultSetHeader } from "mysql2";
+import { hashPassword } from "../utils/password.util.ts";
 
 export const createEmployee = async (
   first_name: string,
@@ -7,9 +8,10 @@ export const createEmployee = async (
   email: string,
   password: string
 ) => {
+    const hashedPassword = await hashPassword(password);
     const [result] = (await pool.execute(
         "insert into employee(first_name,last_name,email,password) values(?,?,?,?)",
-        [first_name,last_name,email,password]
+        [first_name,last_name,email,hashedPassword]
     )) as [ResultSetHeader, unknown];
 
     console.log("result is:", result);
@@ -31,9 +33,11 @@ export const updateEmployee = async(
     email: string,
     password: string
 )=>{
+    const hashedPassword = await hashPassword(password);
+
   const [result]= (await pool.execute(
     "update employee set first_name=?,last_name=?,email=?,password=? where id=?",
-    [first_name,last_name,email,password,id]
+    [first_name,last_name,email,hashedPassword,id]
   )) as [ResultSetHeader, unknown];
 
   console.log("result is:", result);
