@@ -23,8 +23,8 @@ const startServer = async ()=>{
         console.log("Database connected successfully");
         await sequelize.sync();
         console.log("Database tables synced");
-        app.listen(process.env.PORT,()=>{
-            console.log(`Server is running on port  dndndj ${process.env.PORT}`);
+        app.listen(Number(process.env.PORT), () => {
+            console.log(`Server is running on port ${process.env.PORT}`);
         });
     }catch(error){
         console.error("Failed to start server:", error);
