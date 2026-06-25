@@ -2,12 +2,12 @@ import express from "express";
 
 const app = express();
 
-app.get('/',(req,res)=>{
-    res.send("Hello World");
-});
+app.get('/', (req, res) => {
+    res.status(200).json({ message: "Hello World", method: "GET" });
+  });
 
 app.post('/',(req,res)=>{
-    res.send("Hello World");
+    res.status(201).json({message:"Hello World",method:"POST"});
 })
 
 app.listen(3000,()=>{
