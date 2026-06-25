@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/',(req,res)=>{
-    res.send({message: "Assignment 3: CORS + MySQL API"});
+    res.status(200).json({message: "Assignment 3: CORS + MySQL API",method:"GET"});
 });
 
 
