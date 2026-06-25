@@ -1,6 +1,14 @@
 import pool from "../config/db.ts";
-import type { ResultSetHeader } from "mysql2";
+import type { ResultSetHeader, RowDataPacket } from "mysql2";
 import { hashPassword } from "../utils/password.util.ts";
+
+export const findEmployeeByEmail = async (email: string) => {
+  const [rows] = await pool.execute<RowDataPacket[]>(
+    "SELECT id FROM employee WHERE email = ? LIMIT 1",
+    [email]
+  );
+  return rows[0] ?? null;
+};
 
 export const createEmployee = async (
   first_name: string,
@@ -8,6 +16,11 @@ export const createEmployee = async (
   email: string,
   password: string
 ) => {
+    const existingEmployee = await findEmployeeByEmail(email);
+    if (existingEmployee) {
+      throw new Error("Email already exists");
+    }
+
     const hashedPassword = await hashPassword(password);
     const [result] = (await pool.execute(
         "insert into employee(first_name,last_name,email,password) values(?,?,?,?)",
@@ -20,7 +33,9 @@ export const createEmployee = async (
 };
 
 export const getEmployee = async()=>{
-    const [row] = await pool.execute("select * from employee");
+    const [row] = await pool.execute<RowDataPacket[]>(
+      "SELECT id, first_name, last_name, email FROM employee"
+    );
 
     console.log("row is:", row);
     return row;
@@ -33,6 +48,14 @@ export const updateEmployee = async(
     email: string,
     password: string
 )=>{
+    const [existingRows] = await pool.execute<RowDataPacket[]>(
+      "SELECT id FROM employee WHERE email = ? AND id != ? LIMIT 1",
+      [email, id]
+    );
+    if (existingRows[0]) {
+      throw new Error("Email already exists");
+    }
+
     const hashedPassword = await hashPassword(password);
 
   const [result]= (await pool.execute(
