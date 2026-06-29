@@ -219,9 +219,6 @@ describe("DELETE /customer/:id", () => {
     const res = await request(app).delete("/customer/1");
 
     expect(res.status).toBe(500);
-    expect(res.body).toEqual({
-      message: "Internal server error",
-      error: "Database error",
-    });
+    expect(res.body).toEqual({ message: "Internal server error" });
   });
 });

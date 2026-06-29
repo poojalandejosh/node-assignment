@@ -5,6 +5,8 @@ import { authMiddleware } from "../middleware/auth.middleware";
 
 const router = Router();
 
+router.use(authMiddleware);
+
 router.post("/create", async (req, res) => {
   try {
     const { first_name, last_name, email, password } = req.body;
@@ -17,15 +19,15 @@ router.post("/create", async (req, res) => {
         });
     }
 
-    const employee = await customerService.createCustomer(
+    const customer = await customerService.createCustomer(
       first_name,
       last_name,
       email,
       password
     );
     res.status(201).json({
-      message: "Employee created successfully",
-      employeeId: employee.id,
+      message: "Customer created successfully",
+      customerId: customer.id,
     });
   } catch (error) {
     if (error instanceof UniqueConstraintError) {
@@ -35,14 +37,12 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.use(authMiddleware);
-
 router.get("/", async (req, res) => {
   try {
-    const employee = await customerService.getCustomer();
+    const customers = await customerService.getCustomer();
     res.status(200).json({
-      message: "Employees fetched successfully",
-      employee,
+      message: "Customers fetched successfully",
+      customers,
     });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
@@ -54,6 +54,12 @@ router.put("/:id", async (req, res) => {
     const id = Number(req.params.id);
     const { first_name, last_name, email, password } = req.body;
 
+    if (!first_name || !last_name || !email || !password) {
+      return res.status(400).json({
+        message: "first_name, last_name, email and password are required",
+      });
+    }
+
     const result = await customerService.updateCustomer(
       id,
       first_name,
@@ -62,11 +68,11 @@ router.put("/:id", async (req, res) => {
       password
     );
     if (result === 0) {
-      return res.status(404).json({ message: "Employee not found" });
+      return res.status(404).json({ message: "Customer not found" });
     }
 
     res.status(200).json({
-      message: "Employee updated successfully",
+      message: "Customer updated successfully",
     });
   } catch {
     return res.status(500).json({ message: "Internal server error" });
@@ -78,15 +84,14 @@ router.delete("/:id", async (req, res) => {
     const id = Number(req.params.id);
     const result = await customerService.deletCustomer(id);
     if (result === 0) {
-      return res.status(404).json({ message: "Employee not found" });
+      return res.status(404).json({ message: "Customer not found" });
     }
     res.status(200).json({
-      message: "Employee deleted successfully",
+      message: "Customer deleted successfully",
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+    console.error("Failed to delete customer:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 

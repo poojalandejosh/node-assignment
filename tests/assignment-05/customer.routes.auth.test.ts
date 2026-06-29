@@ -19,6 +19,19 @@ describe("Protected customer routes", () => {
     vi.clearAllMocks();
   });
 
+  it("returns 401 for POST /customer/create without token", async () => {
+    const res = await request(app).post("/customer/create").send({
+      first_name: "Jane",
+      last_name: "Doe",
+      email: "jane@example.com",
+      password: "secret123",
+    });
+
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({ message: "Unauthorized" });
+    expect(customerService.createCustomer).not.toHaveBeenCalled();
+  });
+
   it("returns 401 for GET /customer/ without token", async () => {
     const res = await request(app).get("/customer/");
 
