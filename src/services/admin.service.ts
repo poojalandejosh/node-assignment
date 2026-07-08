@@ -114,6 +114,8 @@ export const getCustomers = async (search?: string) => {
           { first_name: { [Op.like]: `%${search}%` } },
           { last_name: { [Op.like]: `%${search}%` } },
           { email: { [Op.like]: `%${search}%` } },
+          { phone: { [Op.like]: `%${search}%` } },
+          {"$account.account_number$": { [Op.like]: `%${search}%` } },
         ],
       },
     });
