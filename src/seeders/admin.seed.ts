@@ -21,12 +21,12 @@ const seedAdmin = async () => {
     await Admin.create({
       name: "Super Admin",
       email,
-      password: await hashPassword("Admin@123"),
+      password: await hashPassword("Test@123"),
     });
 
     console.log("Admin seeded:");
     console.log("Email: admin@bank.com");
-    console.log("Password: Admin@123");
+    console.log("Password: Test@123");
     process.exit(0);
   } catch (error) {
     console.error("seec failed", error);
