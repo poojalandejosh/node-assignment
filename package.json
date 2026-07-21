@@ -19,8 +19,7 @@
     "start": "node index.js",
     "assignment-01": "node src/assignment-01/index.ts",
     "seed:admin": "tsx src/seeders/admin.seed.ts",
-    "bank:dev":"tsx watch src/index.ts"
-
+    "bank:dev": "tsx watch src/index.ts"
   },
   "keywords": [],
   "dependencies": {
@@ -29,6 +28,7 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0",
     "mysql2": "^3.22.5",
     "nodemailer": "^9.0.3",
     "sequelize": "^6.37.8",
@@ -36,8 +36,10 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
     "@types/node": "^26.0.1",
     "@types/nodemailer": "^8.0.1",
     "tsx": "^4.22.4",

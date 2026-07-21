@@ -6,6 +6,7 @@ import "./models/associations";
 import authRoutes from "./routes/auth.routes";
 import adminRoutes from "./routes/admin.routes";
 import customerRoutes from "./routes/customer.routes";
+import path from "path";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/customer", customerRoutes);
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 const startServer = async () => {
   try {

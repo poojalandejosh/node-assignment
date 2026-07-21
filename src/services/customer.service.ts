@@ -11,6 +11,7 @@ const customerAttributes = [
   "phone",
   "address",
   "is_active",
+  "profile_image",
   "createdAt",
 ];
 
@@ -133,3 +134,16 @@ export const getMyTransaction = async (customerId: number) => {
     order: [["createdAt", "DESC"]],
   });
 };
+
+export const updateprofileImage = async (customerId: number, filename: string) => {
+  const customer = await Customer.findOne({
+    where: { id: customerId, is_active: true },
+  })
+  if(!customer) {
+    throw new Error("Customer not found");
+  }
+  customer.profile_image = `/uploads/${filename}`;
+  await customer.save();
+  return getDashboard(customerId);
+
+}

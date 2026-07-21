@@ -11,6 +11,7 @@ interface CustomerAttributes {
   address: string;
   created_by_admin_id: number;
   is_active: boolean;
+  profile_image?: string | null;
 }
 
 type CustomerCreationAttributes = Optional<
@@ -31,6 +32,7 @@ class Customer
   declare address: string;
   declare created_by_admin_id: number;
   declare is_active: boolean;
+  declare profile_image?: string | null;
 }
 
 Customer.init(
@@ -73,6 +75,10 @@ Customer.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+    },
+    profile_image: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

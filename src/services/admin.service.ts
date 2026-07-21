@@ -18,11 +18,12 @@ export const createCustomer = async (
     email: string;
     phone: string;
     address: string;
+    password: string;
     initial_deposite?: number;
   }
 ) => {
   const plainPassword = generatePassword(8);
-  const hashedPassword = await hashPassword(plainPassword);
+  const hashedPassword = await hashPassword(data.password);
   const initialDeposite = data.initial_deposite || 0;
 
   const result = await sequalize.transaction(async (t) => {
@@ -72,7 +73,6 @@ export const createCustomer = async (
   return {
     customerId: result.customer.id,
     accountNumber: result.account.account_number,
-    temporaryPassword: result.plainPassword,
   };
 };
 
